@@ -583,6 +583,8 @@ func middlewareScenario(t *testing.T, desc string, fn scenarioFunc, cbs ...func(
 		sc.userAuthTokenService = ctxHdlr.AuthTokenService.(*auth.FakeUserAuthTokenService)
 		sc.remoteCacheService = ctxHdlr.RemoteCache
 
+		sc.m.Use(AddSecureResponseHeaders(sc.cfg))
+
 		sc.defaultHandler = func(c *models.ReqContext) {
 			require.NotNil(t, c)
 			t.Log("Default HTTP handler called")
